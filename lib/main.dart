@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:speed_dial/screen1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +12,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      // home: const MyHomePage(),
+
+
+      // helps to  specify intial routes
+      initialRoute: "/next",
+
+      routes: {
+        "/" : (context)=>MyHomePage(),
+        "/next" :(context) => Home()
+
+      },
     );
   }
 }
@@ -28,6 +40,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  void getData()async{
+
+    // username response
+ await    Future.delayed(Duration(seconds: 4),(){
+      print("done");
+    });
+
+    // bio 
+  await   Future.delayed(Duration(seconds: 2),(){
+      print("founder");
+    });
+  }
+
+  Map student = {"name" : "alok", "age": "21"};
+
   var controller = PageController();
   int currentPage = 0;
   final List ImageList = [
@@ -35,12 +63,20 @@ class _MyHomePageState extends State<MyHomePage> {
     "assets/2.png",
     "assets/3rd.png",
     "assets/1024.png",
+    "assets/bookmark.png",
+    "assets/comment.png",
+    "assets/download.png",
+    "assets/google.png",
+    "assets/hello.png",
+    "assets/logo.png",
     // "assets/1024.png",
     // "assets/1024.png",
     ];
     @override
     void initState() {
       super.initState();
+      print(student["name"]);
+      getData();
       controller.addListener(() { 
         setState(() {
           
@@ -54,7 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Tinder"),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, "/next");
+          }, icon: Icon(Icons.next_plan))
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -102,8 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
               print("call");
             },
             child: Icon(Icons.call)),
-
-
           SpeedDialChild(
             label: "Tweet",
             backgroundColor: Colors.blue,
@@ -124,3 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+
